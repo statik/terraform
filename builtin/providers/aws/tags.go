@@ -5,6 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/mitchellh/goamz/ec2"
+	"github.com/mitchellh/goamz/autoscaling"
 )
 
 // tagsSchema returns the schema to use for tags.
@@ -86,4 +87,12 @@ func tagsToMap(ts []ec2.Tag) map[string]string {
 	}
 
 	return result
+}
+
+func autoscalingTagsToMap(ts []autoscaling.Tag) map[string]struct{string;bool} {
+  result := make(map[string]struct{string;bool})
+  for _, t := range ts {
+    result[t.Key] = struct{string;bool}{t.Value, t.PropagateAtLaunch}
+  }
+  return result
 }

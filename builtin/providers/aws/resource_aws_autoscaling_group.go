@@ -117,6 +117,9 @@ func resourceAwsAutoscalingGroup() *schema.Resource {
 					return hashcode.String(v.(string))
 				},
 			},
+
+			"tags": tagsSchema(),
+
 		},
 	}
 }
@@ -196,6 +199,7 @@ func resourceAwsAutoscalingGroupRead(d *schema.ResourceData, meta interface{}) e
 	d.Set("min_size", g.MinSize)
 	d.Set("max_size", g.MaxSize)
 	d.Set("name", g.Name)
+	d.Set("tags", autoscalingTagsToMap(g.Tags))
 	d.Set("vpc_zone_identifier", strings.Split(g.VPCZoneIdentifier, ","))
 
 	return nil
